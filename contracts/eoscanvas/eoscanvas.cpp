@@ -1,7 +1,7 @@
 #include <eosiolib/eosio.hpp>
 
 using namespace eosio;
-class picture : public eosio::contract
+class eoscanvas : public eosio::contract
 {
 
   private:
@@ -22,7 +22,7 @@ class picture : public eosio::contract
   public:
     using contract::contract;
 
-    picture(account_name self) : contract(self), pixels(self, self) {}
+    eoscanvas(account_name self) : contract(self), pixels(self, self) {}
 
     /// @abi tablexw
     struct pixel
@@ -52,4 +52,4 @@ class picture : public eosio::contract
     }
 };
 
-EOSIO_ABI(picture, (setpixel))
+EOSIO_ABI(eoscanvas, (setpixel))
