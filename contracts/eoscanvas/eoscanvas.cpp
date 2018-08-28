@@ -36,31 +36,31 @@ class eoscanvas : public eosio::contract
     pixelsstore pixels;
 
     /// @abi action
-    void setpixel(account_name user, uint32_t x, uint32_t y, uint8_t r, uint8_t g, uint8_t b)
+    void setpixel(account_name account, uint32_t x, uint32_t y, uint8_t r, uint8_t g, uint8_t b)
     {
-        require_auth(user);
+        require_auth(account);
         auto key = getXY(x, y);
         auto itr = pixels.find(key);
-        if (itr = pixels.end())
+        if (itr == pixels.end())
         {
-            pixels.emplace(user, [&](pixel &p) {
+            pixels.emplace(account, [&](pixel &p) {
                 p.key = getXY(x, y);
-                p.owner = user;
+                p.owner = account;
                 p.x = x;
                 p.y = y;
                 p.r = r;
                 p.g = g;
-                p.b = b;https://developers.eos.io/eosio-cpp/reference#modify
+                p.b = b;
             });
         }
         else
         {
-            pixels.modify(itr, user, [&](auto &p) {
+            pixels.modify(itr, account, [&](auto &p) {
                 p.r = r;
-                p.owner = user;
+                p.owner = account;
                 p.g = g;
                 p.b = b;
-            })
+            });
         }
     }
 };
