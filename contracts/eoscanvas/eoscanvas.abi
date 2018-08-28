@@ -1,0 +1,89 @@
+{
+  "version": "eosio::abi/1.0",
+  "types": [],
+  "structs": [
+    {
+      "name": "pixel",
+      "base": "",
+      "fields": [
+        {
+          "name": "x",
+          "type": "uint32"
+        },
+        {
+          "name": "y",
+          "type": "uint32"
+        },
+        {
+          "name": "r",
+          "type": "uint8"
+        },
+        {
+          "name": "g",
+          "type": "uint8"
+        },
+        {
+          "name": "b",
+          "type": "uint8"
+        },
+        {
+          "name": "owner",
+          "type": "name"
+        }
+      ]
+    },
+    {
+      "name": "setpixel",
+      "base": "",
+      "fields": [
+        {
+          "name": "account",
+          "type": "name"
+        },
+        {
+          "name": "x",
+          "type": "uint32"
+        },
+        {
+          "name": "y",
+          "type": "uint32"
+        },
+        {
+          "name": "r",
+          "type": "uint8"
+        },
+        {
+          "name": "g",
+          "type": "uint8"
+        },
+        {
+          "name": "b",
+          "type": "uint8"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "name": "setpixel",
+      "type": "setpixel",
+      "ricardian_contract": ""
+    }
+  ],
+  "tables": [
+    {
+      "name": "pixel",
+      "index_type": "i64",
+      "key_names": [
+        "coord"
+      ],
+      "key_types": [
+        "uint64"
+      ],
+      "type": "pixel"
+    }
+  ],
+  "ricardian_clauses": [],
+  "error_messages": [],
+  "abi_extensions": []
+}

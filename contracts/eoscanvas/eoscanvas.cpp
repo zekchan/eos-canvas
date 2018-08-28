@@ -16,11 +16,8 @@ class eoscanvas : public eosio::contract
 
     eoscanvas(account_name self) : contract(self), pixels(self, self) {}
 
-    /// @abi table
     struct pixel
     {
-        // ключ - для ячейки - ее порядковый номер, если считать слево-направо, сверху вниз
-        uint64_t key;
         uint32_t x;
         uint32_t y;
         uint8_t r = 0;
@@ -28,14 +25,12 @@ class eoscanvas : public eosio::contract
         uint8_t b = 0;
         account_name owner;
 
-        auto primary_key() const { return key; };
-        EOSLIB_SERIALIZE(pixel, (key)(r)(g)(b)(owner))
+        auto primary_key() const { return getXY(x, y); };
     };
 
     typedef eosio::multi_index<N(pixel), pixel> pixelsstore;
     pixelsstore pixels;
 
-    /// @abi action
     void setpixel(account_name account, uint32_t x, uint32_t y, uint8_t r, uint8_t g, uint8_t b)
     {
         require_auth(account);
@@ -43,8 +38,7 @@ class eoscanvas : public eosio::contract
         auto itr = pixels.find(key);
         if (itr == pixels.end())
         {
-            pixels.emplace(account, [&](pixel &p) {
-                p.key = getXY(x, y);
+            pixels.emplace(_self, [&](pixel &p) {
                 p.owner = account;
                 p.x = x;
                 p.y = y;
@@ -55,7 +49,7 @@ class eoscanvas : public eosio::contract
         }
         else
         {
-            pixels.modify(itr, account, [&](auto &p) {
+            pixels.modify(itr, _self, [&](auto &p) {
                 p.r = r;
                 p.owner = account;
                 p.g = g;
