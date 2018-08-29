@@ -75,10 +75,8 @@
       "name": "pixel",
       "index_type": "i64",
       "key_names": [
-        "coord"
       ],
       "key_types": [
-        "uint64"
       ],
       "type": "pixel"
     }

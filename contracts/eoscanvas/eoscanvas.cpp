@@ -1,6 +1,7 @@
 #include <eosiolib/eosio.hpp>
 
 using namespace eosio;
+
 class eoscanvas : public eosio::contract
 {
 
@@ -9,6 +10,14 @@ class eoscanvas : public eosio::contract
     {
         // Первые 16 бит 32 битного числа отдаем под X координату, последние - под Y координату
         return ((uint64_t)x << 32) + y;
+    }
+    static void checkXY(uint32_t x, uint32_t y)
+    {
+        eosio_assert(x > 0, "x must be greater then zero");
+        eosio_assert(y > 0, "y must be greater then zero");
+        // TODO: make it configurable via admin account
+        eosio_assert(x <= 100, "x must be less then 100");
+        eosio_assert(y <= 100, "y must be less then 100");
     }
 
   public:
@@ -34,6 +43,7 @@ class eoscanvas : public eosio::contract
     void setpixel(account_name account, uint32_t x, uint32_t y, uint8_t r, uint8_t g, uint8_t b)
     {
         require_auth(account);
+        checkXY(x, y);
         auto key = getXY(x, y);
         auto itr = pixels.find(key);
         if (itr == pixels.end())
