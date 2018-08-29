@@ -48,7 +48,7 @@ class eoscanvas : public eosio::contract
         auto itr = pixels.find(key);
         if (itr == pixels.end())
         {
-            pixels.emplace(_self, [&](pixel &p) {
+            pixels.emplace(account, [&](pixel &p) {
                 p.owner = account;
                 p.x = x;
                 p.y = y;
@@ -59,7 +59,7 @@ class eoscanvas : public eosio::contract
         }
         else
         {
-            pixels.modify(itr, _self, [&](auto &p) {
+            pixels.modify(itr, account, [&](auto &p) {
                 p.r = r;
                 p.owner = account;
                 p.g = g;
